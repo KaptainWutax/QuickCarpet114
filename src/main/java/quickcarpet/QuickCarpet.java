@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import quickcarpet.commands.*;
 import quickcarpet.helper.TickSpeed;
+import quickcarpet.init.KeyBindings;
 import quickcarpet.logging.LoggerRegistry;
 import quickcarpet.module.ModuleHost;
 import quickcarpet.module.QuickCarpetModule;
@@ -75,6 +76,8 @@ public final class QuickCarpet implements ModInitializer, ModuleHost {
             m.onGameStarted();
             LOG.info(Build.NAME + " module " + m.getId() + " version " + m.getVersion() + " initialized");
         }
+
+        KeyBindings.registerKeyBindings();
     }
 
     public void registerCarpetCommands() {

@@ -5,6 +5,7 @@
   "mixins": [
     "BlockTagsAccessor",
     "ClientConnectionMixin",
+    "ClientPlayerEntityMixin",
     "CommandManagerMixin",
     "CraftingInventoryAccessor",
     "CraftingTableBlockMixin",
