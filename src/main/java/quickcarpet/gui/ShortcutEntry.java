@@ -13,11 +13,12 @@ import java.util.List;
 
 public class ShortcutEntry {
 
-    private Screen screen;
+    private GuiCommandsMenu screen;
     private List<Element> screenElements;
     public TextFieldWidget commandLine;
+    public ButtonWidget keyButton;
 
-    public ShortcutEntry(Screen screen) {
+    public ShortcutEntry(GuiCommandsMenu screen) {
         this.init();
         this.screen = screen;
         this.screenElements = ((List<Element>)this.screen.children());
@@ -31,16 +32,21 @@ public class ShortcutEntry {
         this.commandLine.setMaxLength(100);
         this.commandLine.setCursor(0);
 
+        this.keyButton = new ButtonWidget(0, 0, 40, 20, "KEY", this.screen);
+
         if(this.screenElements != null) {
             this.screenElements.add(this.commandLine);
         }
     }
 
     public void render(int index, int posX, int posY, float partialTicks) {
+        this.keyButton.x = posX + 2 * this.screen.width / 12;
+        this.keyButton.y = posY;
         this.commandLine.setX(posX - 3 * this.screen.width / 8);
         this.commandLine.y = posY;
         this.commandLine.setWidth(250);
         this.commandLine.render(posX, posY, partialTicks);
+        this.keyButton.render(posX, posY, partialTicks);
     }
 
     public void tick() {

@@ -53,11 +53,11 @@ public class GuiCommandsMenu extends Screen implements ButtonWidget.PressAction 
     public void render(int posX, int posY, float partialTicks) {
         this.renderDirtBackground(0);
 
-       for(ShortcutEntry entry: this.shortcutEntries) {
+        for(ShortcutEntry entry: this.shortcutEntries) {
             entry.render(this.shortcutEntries.indexOf(entry), posX, posY, partialTicks);
         }
 
-       this.test.render(posX, posY, partialTicks);
+        this.test.render(posX, posY, partialTicks);
         super.render(posX, posY, partialTicks);
     }
 
