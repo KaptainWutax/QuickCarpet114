@@ -19,9 +19,9 @@ public class ShortcutEntry {
     public ButtonWidget keyButton;
 
     public ShortcutEntry(GuiCommandsMenu screen) {
-        this.init();
         this.screen = screen;
         this.screenElements = ((List<Element>)this.screen.children());
+        this.init();
     }
 
     public void init() {
@@ -33,10 +33,8 @@ public class ShortcutEntry {
         this.commandLine.setCursor(0);
 
         this.keyButton = new ButtonWidget(0, 0, 40, 20, "KEY", this.screen);
-
-        if(this.screenElements != null) {
-            this.screenElements.add(this.commandLine);
-        }
+        //this.screen.addButton(this.keyButton);
+        //this.screenElements.add(this.commandLine);
     }
 
     public void render(int index, int posX, int posY, float partialTicks) {
@@ -57,13 +55,19 @@ public class ShortcutEntry {
         this.commandLine.charTyped(char_1, int_1);
     }
 
-    public void keyPressed(int int_1, int int_2, int int_3) {
-        this.commandLine.keyPressed(int_1, int_2, int_3);
+    public boolean keyPressed(int int_1, int int_2, int int_3) {
+        return this.commandLine.keyPressed(int_1, int_2, int_3);
     }
 
     public boolean mouseClicked(double double_1, double double_2, int int_1) {
-        this.commandLine.setCursor(0);
-        return this.commandLine.changeFocus(true);
-    }
+        if(this.keyButton.mouseClicked(double_1, double_2, int_1)) {
+            this.keyButton.changeFocus(true);
+        } else if(this.commandLine.mouseClicked(double_1, double_2, int_1)) {
+            this.commandLine.setCursor(this.commandLine.getText().length());
+            this.commandLine.changeFocus(true);
+        }
+
+        return this.commandLine.mouseClicked(double_1, double_2, int_1);
+   }
 
 }

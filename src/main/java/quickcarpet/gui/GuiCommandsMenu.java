@@ -46,7 +46,6 @@ public class GuiCommandsMenu extends Screen implements ButtonWidget.PressAction 
         this.addButton(shortcuts);
         this.addButton(this.buttonAddShortcut);
         this.children.add(test);
-        shortcutEntries.add(new ShortcutEntry(this));
     }
 
     @Override
@@ -111,6 +110,7 @@ public class GuiCommandsMenu extends Screen implements ButtonWidget.PressAction 
         public void focus(ShortcutItem item) {
             this.focusOn(item);
             this.setSelected(item);
+            item.entry.commandLine.setCursor(item.entry.commandLine.getText().length());
             item.entry.commandLine.changeFocus(true);
         }
 
@@ -138,28 +138,34 @@ public class GuiCommandsMenu extends Screen implements ButtonWidget.PressAction 
 
             @Override
             public void render(int var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8, float var9) {
-                entry.render(0, ShortcutSelectionListWidget.this.width / 2, var2 + 25 / 2, 0);
-                ShortcutSelectionListWidget.this.drawCenteredString(MinecraftClient.getInstance().textRenderer, "", ShortcutSelectionListWidget.this.width / 2, var2 + 1, 16777215);
+                entry.render(0, ShortcutSelectionListWidget.this.width / 2, var2 + 25/2, 0);
             }
 
             @Override
             public boolean mouseClicked(double double_1, double double_2, int int_1) {
-                GuiCommandsMenu.ShortcutSelectionListWidget.this.setSelected(this);
+                GuiCommandsMenu.ShortcutSelectionListWidget.this.focus(this);
                 return entry.mouseClicked(double_1, double_2, int_1);
             }
 
             @Override
             public boolean charTyped(char char_1, int int_1) {
-                GuiCommandsMenu.ShortcutSelectionListWidget.this.setSelected(this);
+                GuiCommandsMenu.ShortcutSelectionListWidget.this.focus(this);
                 entry.charTyped(char_1, int_1);
                 return super.charTyped(char_1, int_1);
             }
 
             @Override
             public boolean keyPressed(int int_1, int int_2, int int_3) {
-                GuiCommandsMenu.ShortcutSelectionListWidget.this.setSelected(this);
-                entry.keyPressed(int_1, int_2, int_3);
-                return super.keyPressed(int_1, int_2, int_3);
+                GuiCommandsMenu.ShortcutSelectionListWidget.this.focus(this);
+                return entry.keyPressed(int_1, int_2, int_3);
+            }
+
+
+            @Override
+            public boolean mouseReleased(double double_1, double double_2, int int_1) {
+                entry.commandLine.mouseReleased(double_1, double_2, int_1);
+                entry.keyButton.mouseReleased(double_1, double_2, int_1);
+                return true;
             }
 
         }
